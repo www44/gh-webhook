@@ -114,7 +114,6 @@ More information about used providers can be found here: [github](https://regist
 
 ## Limitations
 
-* Terraform state is not shared for parallel development / rollout.
 * There is one known [bug](https://github.com/nficano/python-lambda/issues/711) in python-lambda, that prevents redeployment of AWS Lambda function. So please insert `time.sleep(10)` in pylambda/lib/python3.8/site-packages/aws_lambda/aws_lambda.py manually or with following snippet:
 
     ~~~bash

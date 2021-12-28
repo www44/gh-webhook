@@ -1,0 +1,24 @@
+name: deploy-terraform
+on: [push]
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      myregion: eu-central-1
+      githubOwner: LWXE
+      githubSecretName: githubToken
+    defaults:
+      working-directory: infrastructure
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+      - name: Terraform init 
+        run: terraform init
+      - name: Terraform plan
+        run: terraform plan -var "myregion=$myregion" -var "githubOwner=$githubOwner" -var "githubSecretName=$githubSecretName" -var "accountId=$AWS_ACCOUNT_ID"
+      - name: Terraform Apply  
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'  
+        run: terraform apply -auto-approve -var "myregion=$myregion" -var "githubOwner=$githubOwner" -var "githubSecretName=$githubSecretName" -var "accountId=$AWS_ACCOUNT_ID"

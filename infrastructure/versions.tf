@@ -9,6 +9,11 @@ terraform {
       version = "~> 3.0"
     }
   }
+  backend "s3" {
+    bucket         = "my-terraform-buckets"
+    key            = "github"
+    region         = "eu-central-1"
+  }
 }
 
 provider "aws" {
