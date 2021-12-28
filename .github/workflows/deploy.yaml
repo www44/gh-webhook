@@ -10,15 +10,16 @@ jobs:
       myregion: eu-central-1
       githubOwner: LWXE
       githubSecretName: githubToken
-    defaults:
-      working-directory: infrastructure
     steps:
       - uses: actions/checkout@v2
       - uses: hashicorp/setup-terraform@v1
-      - name: Terraform init 
+      - name: Terraform init
+        working-directory: infrastructure
         run: terraform init
       - name: Terraform plan
+        working-directory: infrastructure
         run: terraform plan -var "myregion=$myregion" -var "githubOwner=$githubOwner" -var "githubSecretName=$githubSecretName" -var "accountId=$AWS_ACCOUNT_ID"
       - name: Terraform Apply  
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'  
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push' 
+        working-directory: infrastructure 
         run: terraform apply -auto-approve -var "myregion=$myregion" -var "githubOwner=$githubOwner" -var "githubSecretName=$githubSecretName" -var "accountId=$AWS_ACCOUNT_ID"
