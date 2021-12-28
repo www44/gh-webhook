@@ -43,7 +43,7 @@ Now we can prepare terraform environment for solution rollout:
     3. aws secret name with github access token as *githubSecretName*.
     4. GitHub organization name as *githubOwner*.
 8. roll out webhook with `terraform apply` command.
-9.  notice webhook_url output, it shows webhook url that was added to GitHub organization, and can be used for local testing.
+9. notice webhook_url output, it shows webhook url that was added to GitHub organization, and can be used for local testing.
 10. navigate to GitHub organization webhook configuration page, open Recent Deliveries, you should see there one ping request with following response:
 
     ~~~json
