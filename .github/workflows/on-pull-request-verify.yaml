@@ -1,4 +1,4 @@
-name: deploy-terraform
+name: verify
 on: 
   pull_request:
     branches:
