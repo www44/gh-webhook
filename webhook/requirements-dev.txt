@@ -1,0 +1,2 @@
+python-lambda==11.8.0
+PyGithub==1.55
