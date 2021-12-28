@@ -68,7 +68,14 @@ This section can help if solution does not work as expected.
 
 #### ci/cd
 
+Webhook and terraform pull-request level verification is implemented with this[workflow](.github/workflows/on-pull-request-verify.yaml):
 
+* python verification includes linting of webhook code with flake8 and service execution with lambda and test ping event.
+* terraform verification includes `terraform plan`.
+
+Main branch protection is update so, that pull request is not verified if one of these checks fails.
+
+When pull-request is merged, there is [second workflow](.github/workflows/on-main-push-deploy.yaml) that updates whole infrastructure with `terraform apply`.
 
 #### webhook
 
