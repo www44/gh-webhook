@@ -1,0 +1,43 @@
+name: deploy-terraform
+on: 
+  pull_request:
+    branches:
+      - main
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Prepare environment
+      working-directory: webhook
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements-dev.txt
+    - name: Lint with Flake8
+      working-directory: webhook
+      run: flake8
+    - name: Verify ping event python-lambda
+      working-directory: webhook
+      run: lambda invoke -v --event-file event-ping.json
+  terraform:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      myregion: eu-central-1
+      githubOwner: LWXE
+      githubSecretName: githubToken
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+      - name: Terraform init
+        working-directory: infrastructure
+        run: terraform init
+      - name: Terraform plan
+        working-directory: infrastructure
+        run: terraform plan -var "myregion=$myregion" -var "githubOwner=$githubOwner" -var "githubSecretName=$githubSecretName" -var "accountId=$AWS_ACCOUNT_ID"
+      

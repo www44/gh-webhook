@@ -1,5 +1,8 @@
 name: deploy-terraform
-on: [push]
+on: 
+  push:
+    branches:
+      - main
 jobs:
   terraform:
     runs-on: ubuntu-latest
@@ -20,6 +23,5 @@ jobs:
         working-directory: infrastructure
         run: terraform plan -var "myregion=$myregion" -var "githubOwner=$githubOwner" -var "githubSecretName=$githubSecretName" -var "accountId=$AWS_ACCOUNT_ID"
       - name: Terraform Apply  
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push' 
         working-directory: infrastructure 
         run: terraform apply -auto-approve -var "myregion=$myregion" -var "githubOwner=$githubOwner" -var "githubSecretName=$githubSecretName" -var "accountId=$AWS_ACCOUNT_ID"
