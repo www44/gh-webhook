@@ -10,9 +10,9 @@ terraform {
     }
   }
   backend "s3" {
-    bucket         = "my-terraform-buckets"
-    key            = "github"
-    region         = "eu-central-1"
+    bucket = "my-terraform-buckets"
+    key    = "github"
+    region = "eu-central-1"
   }
 }
 
@@ -27,6 +27,6 @@ data "aws_secretsmanager_secret_version" "github" {
   secret_id = data.aws_secretsmanager_secret.github_token.id
 }
 provider "github" {
-    token = data.aws_secretsmanager_secret_version.github.secret_string
-    owner = var.githubOwner
+  token = data.aws_secretsmanager_secret_version.github.secret_string
+  owner = var.githubOwner
 }

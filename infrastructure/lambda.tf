@@ -28,10 +28,10 @@ module "lambda_function" {
     "git_default_branch" = "main"
   }
 
-  publish = true
+  publish       = true
   attach_policy = true
-  policy = "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
-  
+  policy        = "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
+
   allowed_triggers = {
     APIGateway = {
       service    = "apigateway"

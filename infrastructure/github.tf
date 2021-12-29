@@ -1,6 +1,6 @@
 resource "time_sleep" "wait_10_seconds" {
   create_duration = "10s"
-  depends_on = [aws_api_gateway_deployment.deployment]
+  depends_on      = [aws_api_gateway_deployment.deployment]
 }
 
 resource "github_organization_webhook" "webhook" {

@@ -1,9 +1,9 @@
 variable "myregion" {
-    description = "aws region"
+  description = "aws region"
 }
 
 variable "accountId" {
-    description = "aws account id"
+  description = "aws account id"
 }
 
 variable "githubOwner" {
@@ -12,5 +12,5 @@ variable "githubOwner" {
 
 variable "githubSecretName" {
   description = "aws secret name with github access token"
-  default = "githubToken"
+  default     = "githubToken"
 }
