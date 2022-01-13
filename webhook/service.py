@@ -52,7 +52,7 @@ def handler(event, context):
     # create issue, mentioning author in description
     username = event['sender']['login']
     repo.create_issue(title="protect branch",
-                      body=f"@{username}, main branch is protected now")
+                      body=f"@{username}, main branch is under protection.")
     output["body"] = {"message": f"branch {branch.name} is under protection."}
     return output
 
